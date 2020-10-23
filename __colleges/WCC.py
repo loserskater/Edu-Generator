@@ -1,4 +1,4 @@
-from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import TimeoutException, NoSuchElementException
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
@@ -107,13 +107,26 @@ def continue_app(driver, student: Student.Student):
 
     driver.get('https://generator.email/' + student.email)
 
-    try:
-        WebDriverWait(driver, 180).until(
-            EC.element_to_be_clickable((By.LINK_TEXT, "Click to Activate Your Account"))
-        ).click()
-    except TimeoutException:
-        print("Timeout reached, run bot.py again in a few hours and continue application")
-        return
+    wait = 180
+    while True:
+        mins, secs = divmod(wait, 60)
+        timeformat = '\rWaiting {:02d}:{:02d}'.format(mins, secs)
+        print(timeformat, end='')
+        try:
+            driver.find_element_by_xpath("//*[contains(text(),'Click to Activate Your Account')]")
+            print('\rGot the email, continuing')
+            break
+        except NoSuchElementException:
+            if wait <= 0:
+                print('\nTimeout reached, run bot.py again in a few hours and continue application')
+                return
+            time.sleep(1)
+            wait -= 1
+            continue
+
+    WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable((By.LINK_TEXT, "Click to Activate Your Account"))
+    ).click()
 
     time.sleep(1)
     driver.switch_to_window(driver.window_handles[1])

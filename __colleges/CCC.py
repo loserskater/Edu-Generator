@@ -273,7 +273,7 @@ def apply(driver, student):
             print('\rCaptcha Solved!')
             break
         except NoSuchElementException:
-            if wait == 0:
+            if wait <= 0:
                 print('\nCaptcha not solved. Exiting')
                 return
             time.sleep(1)
