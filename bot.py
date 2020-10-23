@@ -19,9 +19,6 @@ def start_bot():
             # cap = DesiredCapabilities().FIREFOX
             # cap['marionette'] = True
             driver = webdriver.Firefox(executable_path=r'./webdriver/geckodriver')
-        elif browser == '':
-            print('Error - Run setup.py first')
-            exit()
     except Exception as e:
         time.sleep(0.4)
         print('\nError - ' + str(e))
