@@ -9,3 +9,5 @@ __pycache__/
 /venv
 /webdriver/*.crx
 /webdriver/*.xpi
+webdriver/chromedriver.exe
+webdriver/geckodriver.exe

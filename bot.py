@@ -60,6 +60,14 @@ def continue_application(college):
 
 
 def main():
+    # Check if setup.py has been run
+    with open('prefBrowser.txt', 'r') as fp:
+        browser = fp.read()
+
+    if browser == '':
+        print('Run setup.py first!')
+        return
+
     print('\nKeep an eye on this console!')
     time.sleep(2)
     print('Select a college:')
