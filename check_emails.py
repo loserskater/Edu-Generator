@@ -5,7 +5,7 @@ emails = ["Check All"]
 
 
 def get_emails():
-    with open('myccAcc.txt', 'r') as f:
+    with open('students.txt', 'r') as f:
         accounts = f.readlines()
 
     for line in accounts:

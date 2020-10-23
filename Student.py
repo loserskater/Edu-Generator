@@ -154,14 +154,14 @@ def build_student(driver, college):
 
 
 def save_student(student):
-    with open('myccAcc.txt', 'a') as f:
+    with open('students.txt', 'a') as f:
         f.write(json.dumps(vars(student)) + '\n')
 
 
 def get_student_from_file():
     student_list = []
     index = 1
-    with open('myccAcc.txt', 'r') as f:
+    with open('students.txt', 'r') as f:
         lines = f.readlines()
 
     for line in lines:
