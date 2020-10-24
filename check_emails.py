@@ -27,7 +27,7 @@ def main():
             continue
         else:
             break
-    if data is 0:
+    if data == 0:
         emails.pop(0)
         webbrowser.open('https://generator.email/')
         sleep(10)
