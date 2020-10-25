@@ -271,17 +271,14 @@ def apply(driver, student):
             wait -= 1
             continue
 
-    print('Waiting')
-    input()
-
     WebDriverWait(driver, 10).until(
-        EC.element_to_be_clickable((By.NAME, '_eventId_continue'))
+        EC.element_to_be_clickable((By.XPATH, "//button[normalize-space()='Continue']"))
     ).click()
 
     print('Details Progress - 1/8', end='')
 
-    WebDriverWait(driver, 10).until(
-        EC.element_located_to_be_selected((By.ID, 'inputTermId'))
+    WebDriverWait(driver, 30).until(
+        EC.element_to_be_clickable((By.ID, 'inputTermId'))
     )
 
     Select(driver.find_element_by_id(
@@ -289,15 +286,20 @@ def apply(driver, student):
         .select_by_index(2)
 
     WebDriverWait(driver, 10).until(
-        EC.element_located_to_be_selected((By.ID, 'inputEduGoal'))
+        EC.element_to_be_clickable((By.ID, 'inputEduGoal'))
     )
 
     Select(driver.find_element_by_id(
         'inputEduGoal')) \
         .select_by_value('B')
 
+    if student.college == 'Southwestern College':
+        Select(driver.find_element_by_id(
+            'inputMajorCategory')) \
+            .select_by_index(random.randint(1, 12))
+
     WebDriverWait(driver, 10).until(
-        EC.element_located_to_be_selected((By.ID, 'inputMajorId'))
+        EC.element_to_be_clickable((By.ID, 'inputMajorId'))
     )
 
     Select(driver.find_element_by_id(
@@ -305,7 +307,7 @@ def apply(driver, student):
         .select_by_index(random.randint(1, 7))
 
     WebDriverWait(driver, 10).until(
-        EC.element_to_be_clickable((By.NAME, '_eventId_continue'))
+        EC.element_to_be_clickable((By.XPATH, "//button[normalize-space()='Continue']"))
     ).click()
 
     print(' (Success)')
@@ -317,13 +319,13 @@ def apply(driver, student):
     time.sleep(0.7)
 
     WebDriverWait(driver, 10).until(
-        EC.element_to_be_clickable((By.NAME, '_eventId_continue'))
+        EC.element_to_be_clickable((By.XPATH, "//button[normalize-space()='Continue']"))
     ).click()
 
     print('Details Progress - 2/8', end='')
 
     WebDriverWait(driver, 10).until(
-        EC.element_located_to_be_selected((By.ID, 'inputEnrollmentStatus'))
+        EC.element_to_be_clickable((By.ID, 'inputEnrollmentStatus'))
     )
 
     Select(driver.find_element_by_id(
@@ -331,7 +333,7 @@ def apply(driver, student):
         .select_by_index(1)
 
     WebDriverWait(driver, 10).until(
-        EC.element_located_to_be_selected((By.ID, 'inputHsEduLevel'))
+        EC.element_to_be_clickable((By.ID, 'inputHsEduLevel'))
     )
 
     Select(driver.find_element_by_id(
@@ -339,7 +341,7 @@ def apply(driver, student):
         .select_by_index(1)
 
     WebDriverWait(driver, 10).until(
-        EC.element_located_to_be_selected((By.ID, 'inputHsCompMM'))
+        EC.element_to_be_clickable((By.ID, 'inputHsCompMM'))
     )
 
     Select(driver.find_element_by_id(
@@ -367,7 +369,7 @@ def apply(driver, student):
     ).click()
 
     WebDriverWait(driver, 10).until(
-        EC.element_located_to_be_selected((By.ID, 'hs-input-sf-state'))
+        EC.element_to_be_clickable((By.ID, 'hs-input-sf-state'))
     )
 
     Select(driver.find_element_by_id(
@@ -375,7 +377,7 @@ def apply(driver, student):
         .select_by_value(student.stateAddress)
 
     WebDriverWait(driver, 10).until(
-        EC.element_located_to_be_selected((By.ID, 'hs-school-name'))
+        EC.element_to_be_clickable((By.ID, 'hs-school-name'))
     ).send_keys(random.choice(['north', 'east', 'south', 'west']))
 
     WebDriverWait(driver, 10).until(
@@ -386,8 +388,7 @@ def apply(driver, student):
     parent = driver.find_element_by_class_name('autocomplete-menu')
     schools = parent.find_elements_by_tag_name("li")
 
-    time.sleep(1)
-    schools[random.randrange(2, 9)].click()
+    schools[random.randint(2, 9)].click()
 
     WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.ID, 'inputGPA'))
@@ -395,30 +396,30 @@ def apply(driver, student):
 
     Select(driver.find_element_by_id(
         'inputHighestEnglishCourse')) \
-        .select_by_index(random.randrange(1, 7))
+        .select_by_index(random.randint(1, 7))
 
     WebDriverWait(driver, 10).until(
-        EC.element_located_to_be_selected((By.ID, 'inputHighestEnglishGrade'))
+        EC.element_to_be_clickable((By.ID, 'inputHighestEnglishGrade'))
     )
 
     Select(driver.find_element_by_id(
         'inputHighestEnglishGrade')) \
-        .select_by_index(random.randrange(1, 8))
+        .select_by_index(random.randint(1, 8))
 
     Select(driver.find_element_by_id(
         'inputHighestMathCourseTaken')) \
-        .select_by_index(random.randrange(1, 13))
+        .select_by_index(random.randint(1, 13))
 
     WebDriverWait(driver, 10).until(
-        EC.element_located_to_be_selected((By.ID, 'inputHighestMathTakenGrade'))
+        EC.element_to_be_clickable((By.ID, 'inputHighestMathTakenGrade'))
     )
 
     Select(driver.find_element_by_id(
         'inputHighestMathTakenGrade')) \
-        .select_by_index(random.randrange(1, 8))
+        .select_by_index(random.randint(1, 8))
 
     WebDriverWait(driver, 10).until(
-        EC.element_to_be_clickable((By.NAME, '_eventId_continue'))
+        EC.element_to_be_clickable((By.XPATH, "//button[normalize-space()='Continue']"))
     ).click()
 
     print(' (Success)')
@@ -428,7 +429,7 @@ def apply(driver, student):
     # Military
 
     WebDriverWait(driver, 10).until(
-        EC.element_located_to_be_selected((By.ID, 'inputCitizenshipStatus'))
+        EC.element_to_be_clickable((By.ID, 'inputCitizenshipStatus'))
     )
 
     Select(driver.find_element_by_id(
@@ -440,7 +441,7 @@ def apply(driver, student):
         .select_by_index(1)
 
     WebDriverWait(driver, 10).until(
-        EC.element_to_be_clickable((By.NAME, '_eventId_continue'))
+        EC.element_to_be_clickable((By.XPATH, "//button[normalize-space()='Continue']"))
     ).click()
 
     print(' (Success)')
@@ -462,7 +463,7 @@ def apply(driver, student):
     ).click()
 
     WebDriverWait(driver, 10).until(
-        EC.element_to_be_clickable((By.NAME, '_eventId_continue'))
+        EC.element_to_be_clickable((By.XPATH, "//button[normalize-space()='Continue']"))
     ).click()
 
     print(' (Success)')
@@ -488,7 +489,7 @@ def apply(driver, student):
     ).click()
 
     WebDriverWait(driver, 10).until(
-        EC.element_to_be_clickable((By.NAME, '_eventId_continue'))
+        EC.element_to_be_clickable((By.XPATH, "//button[normalize-space()='Continue']"))
     ).click()
 
     print(' (Success)')
@@ -498,7 +499,7 @@ def apply(driver, student):
     # Demographic
 
     WebDriverWait(driver, 10).until(
-        EC.element_located_to_be_selected((By.ID, 'inputGender'))
+        EC.element_to_be_clickable((By.ID, 'inputGender'))
     )
 
     Select(driver.find_element_by_id(
@@ -515,11 +516,11 @@ def apply(driver, student):
 
     Select(driver.find_element_by_id(
         'inputParentGuardianEdu1')) \
-        .select_by_index(random.randrange(1, 7))
+        .select_by_index(random.randint(1, 7))
 
     Select(driver.find_element_by_id(
         'inputParentGuardianEdu2')) \
-        .select_by_index(random.randrange(1, 7))
+        .select_by_index(random.randint(1, 7))
 
     WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.ID, 'inputHispanicNo'))
@@ -534,7 +535,7 @@ def apply(driver, student):
     ).click()
 
     WebDriverWait(driver, 10).until(
-        EC.element_to_be_clickable((By.NAME, '_eventId_continue'))
+        EC.element_to_be_clickable((By.XPATH, "//button[normalize-space()='Continue']"))
     ).click()
 
     print(' (Success)')
@@ -566,10 +567,10 @@ def apply(driver, student):
 
         driver.find_element_by_name("_eventId_continue").click()
 
-    elif student.college == 'Antelope Valley':
+    elif student.college == 'Antelope Valley College':
 
         WebDriverWait(driver, 10).until(
-            EC.element_located_to_be_selected(
+            EC.element_to_be_clickable(
                 (By.ID, '_supp_MENU_1'))
         )
 
@@ -589,7 +590,7 @@ def apply(driver, student):
             .select_by_index(1)
 
     WebDriverWait(driver, 10).until(
-        EC.element_to_be_clickable((By.NAME, '_eventId_continue'))
+        EC.element_to_be_clickable((By.XPATH, "//button[normalize-space()='Continue']"))
     ).click()
 
     print(' (Success)')
