@@ -15,7 +15,7 @@ def apply(driver, student):
 
     print('Applying to ' + student.college, end='')
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.ID, "ctl00_mainContent_LoggedInFromPublicComputer"))
     ).click()
 
@@ -25,39 +25,39 @@ def apply(driver, student):
                 (By.XPATH, "//*[contains(text(),'Log Out')]"))
         ).click
     except TimeoutException:
-        WebDriverWait(driver, 60).until(
+        WebDriverWait(driver, 10).until(
             EC.element_to_be_clickable(
                 (By.ID, "ctl00_mainContent_CreateUserControl_ProspectForm_firstname_firstname"))
         ).send_keys(student.firstName)
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.ID, "ctl00_mainContent_CreateUserControl_ProspectForm_lastname_lastname"))
     ).send_keys(student.lastName)
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.ID, "ctl00_mainContent_CreateUserControl_ProspectForm_emailaddress1_emailaddress1"))
     ).send_keys(student.email)
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.ID, "ctl00_mainContent_CreateUserControl_ProspectForm_datatel_emailaddress1_confirm_datatel_emailaddress1_confirm"))
     ).send_keys(student.email)
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.ID,
                                     "ctl00_mainContent_CreateUserControl_ProspectForm_address1_telephone1_address1_telephone1"))
     ).send_keys(student.phone)
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.ID,
                                     "ctl00_mainContent_CreateUserControl_ProspectForm_address1_line1_address1_line1"))
     ).send_keys(student.streetAddress)
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.ID,
                                     "ctl00_mainContent_CreateUserControl_ProspectForm_address1_city_address1_city"))
     ).send_keys(student.cityAddress)
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.ID,
                                     "ctl00_mainContent_CreateUserControl_ProspectForm_address1_postalcode_address1_postalcode"))
     ).send_keys(student.postalCode)
@@ -68,25 +68,25 @@ def apply(driver, student):
     select = Select(driver.find_element_by_id('ctl00_mainContent_CreateUserControl_ProspectForm_datatel_anticipatedentrytermid_datatel_anticipatedentrytermid'))
     select.select_by_visible_text('Spring 2021 Credit')
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.ID, 'ctl00_mainContent_CreateUserControl_ProspectForm_membership_password_membership_password'))
     ).send_keys(student.password)
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.ID, 'ctl00_mainContent_CreateUserControl_ProspectForm_membership_confirmpassword_membership_confirmpassword'))
     ).send_keys(student.password)
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.ID, 'ctl00_mainContent_CreateUserControl_ProspectForm_membership_passwordquestion_membership_passwordquestion'))
     ).send_keys('Mother\'s maiden name')
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.ID, 'ctl00_mainContent_CreateUserControl_ProspectForm_membership_passwordanswer_membership_passwordanswer'))
     ).send_keys('Doe')
 
     time.sleep(1)
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.ID, "ctl00_mainContent_CreateUserControl_CreateUserButton"))
     ).click()
 
@@ -94,7 +94,7 @@ def apply(driver, student):
 
     Student.save_student(student)
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.XPATH, "//*[contains(text(),'Account Pending Activation')]"))
     )
 
@@ -131,31 +131,31 @@ def continue_app(driver, student: Student.Student):
     time.sleep(1)
     driver.switch_to_window(driver.window_handles[1])
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.ID, "ctl00_LoginStatus"))
     ).click()
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.ID, "ctl00_mainContent_LoggedInFromPublicComputer"))
     ).click()
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.ID, "ctl00_mainContent_LoginControl_UserName"))
     ).send_keys(student.email)
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.ID, "ctl00_mainContent_LoginControl_Password"))
     ).send_keys(student.password)
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.ID, "ctl00_mainContent_LoginControl_Login"))
     ).click()
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.LINK_TEXT, "2. Start an Application"))
     ).click()
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.LINK_TEXT, "Start a New Westmoreland Undergraduate Application"))
     ).click()
 
@@ -190,30 +190,30 @@ def continue_app(driver, student: Student.Student):
     Select(driver.find_element_by_id(
         'ctl00_mainContent_ApplicationForm_ApplicationForm_ApplicationFormControl_w45_new_areyouinterestedinact101ortrio_w45_new_areyouinterestedinact101ortrio')).select_by_index(1)
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.NAME, "ctl00$mainContent$ApplicationForm$ApplicationForm$ctl01"))
     ).click()
 
     print(' (Success)\n2/6 - Personal', end='')
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.ID, "ctl00_mainContent_ApplicationForm_ApplicationForm_ApplicationFormControl_datatel_ssn_datatel_ssn"))
     ).send_keys(student.ssn)
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable(
             (By.ID, "ctl00_mainContent_ApplicationForm_ApplicationForm_ApplicationFormControl_datatel_birthdate_datatel_birthdate"))
     ).send_keys(f'{student.birthdayMonth}/{student.birthdayDay}/{student.birthdayYear}')
 
     Select(driver.find_element_by_id('ctl00_mainContent_ApplicationForm_ApplicationForm_ApplicationFormControl_datatel_genderid_datatel_genderid')).select_by_index(1)
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.ID, "ctl00_mainContent_ApplicationForm_ApplicationForm_ApplicationFormControl_w45_primaryphone_w45_primaryphone"))
     ).send_keys(student.phone)
 
     Select(driver.find_element_by_id('ctl00_mainContent_ApplicationForm_ApplicationForm_ApplicationFormControl_w45_primaryphonetype_w45_primaryphonetype')).select_by_index(2)
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.NAME, "ctl00$mainContent$ApplicationForm$ApplicationForm$ctl01"))
     ).click()
 
@@ -232,7 +232,7 @@ def continue_app(driver, student: Student.Student):
     Select(driver.find_element_by_id('ctl00_mainContent_ApplicationForm_ApplicationForm_ApplicationFormControl_w45_race5_w45_race5'))\
         .select_by_index(2)
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.NAME, "ctl00$mainContent$ApplicationForm$ApplicationForm$ctl01"))
     ).click()
 
@@ -248,11 +248,11 @@ def continue_app(driver, student: Student.Student):
         'ctl00_mainContent_ApplicationForm_ApplicationForm_ApplicationFormControl_w45_tempattendedhstomonth_w45_tempattendedhstomonth')) \
         .select_by_index(6)
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.ID, "ctl00_mainContent_ApplicationForm_ApplicationForm_ApplicationFormControl_w45_attendedhsfromyear_w45_attendedhsfromyear"))
     ).send_keys(str(int(student.birthdayYear) - 4))
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.ID, "ctl00_mainContent_ApplicationForm_ApplicationForm_ApplicationFormControl_w45_attendedhstoyear_w45_attendedhstoyear"))
     ).send_keys(student.birthdayYear)
 
@@ -260,13 +260,13 @@ def continue_app(driver, student: Student.Student):
         'ctl00_mainContent_ApplicationForm_ApplicationForm_ApplicationFormControl_w45_new_takenclassesatactc_w45_new_takenclassesatactc')) \
         .select_by_index(1)
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.NAME, "ctl00$mainContent$ApplicationForm$ApplicationForm$ctl01"))
     ).click()
 
     print(' (Success)\n5/6 - Activities', end='')
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.ID, "ctl00_mainContent_ApplicationForm_ApplicationForm_ApplicationFormControl_w45_new_areyouinterestedinnjcaathletics_w45_new_areyouinterestedinnjcaathletics"))
     )
 
@@ -274,40 +274,40 @@ def continue_app(driver, student: Student.Student):
         'ctl00_mainContent_ApplicationForm_ApplicationForm_ApplicationFormControl_w45_new_areyouinterestedinnjcaathletics_w45_new_areyouinterestedinnjcaathletics')) \
         .select_by_index(1)
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.NAME, "ctl00$mainContent$ApplicationForm$ApplicationForm$ctl01"))
     ).click()
 
     print(' (Success)\n6/6 - Writing & Signature', end='')
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.ID,
                                         "ctl00_mainContent_ApplicationForm_ApplicationForm_ApplicationFormControl_datatel_certify1_datatel_certify1_0"))
     ).click()
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.ID,
                                         "ctl00_mainContent_ApplicationForm_ApplicationForm_ApplicationFormControl_datatel_certify2_datatel_certify2_0"))
     ).click()
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.ID,
                                         "ctl00_mainContent_ApplicationForm_ApplicationForm_ApplicationFormControl_datatel_certify3_datatel_certify3_0"))
     ).click()
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.ID,
                                         "ctl00_mainContent_ApplicationForm_ApplicationForm_ApplicationFormControl_datatel_signature_datatel_signature"))
     ).send_keys(student.firstName + ' ' + student.lastName)
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.ID,
                                         "ctl00_mainContent_ApplicationForm_ApplicationForm_submitBtn"))
     ).click()
 
     print(' (Success)\nSubmitting', end='')
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.ID,
                                         "ctl00_mainContent_CompletedControl1_applicationCompletedControl"))
     )

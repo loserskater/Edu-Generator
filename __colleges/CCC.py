@@ -26,33 +26,33 @@ def apply(driver, student):
 
     driver.get(url)
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.LINK_TEXT, "Create an Account"))
     ).click()
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.ID, "accountFormSubmit"))
     ).click()
 
     print('Account Progress - 1/3', end='')
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.ID, "inputFirstName"))
     ).send_keys(student.firstName)
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.ID, "inputMiddleName"))
     ).send_keys(student.middleName)
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.ID, "inputLastName"))
     ).send_keys(student.lastName)
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.ID, 'hasOtherNameNo'))
     ).click()
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.ID, 'hasPreferredNameNo'))
     ).click()
 
@@ -64,7 +64,7 @@ def apply(driver, student):
         'inputBirthDateDay')) \
         .select_by_value(str(student.birthdayDay))
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.ID, 'inputBirthDateYear'))
     ).send_keys(student.birthdayYear)
 
@@ -76,23 +76,23 @@ def apply(driver, student):
         'inputBirthDateDayConfirm')) \
         .select_by_value(str(student.birthdayDay))
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.ID, 'inputBirthDateYearConfirm'))
     ).send_keys(student.birthdayYear)
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.ID, '-have-ssn-yes'))
     ).click()
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.NAME, 'ssn'))
     ).send_keys(student.ssn)
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.NAME, 'ssnConfirm'))
     ).send_keys(student.ssn)
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.ID, 'accountFormSubmit'))
     ).click()
 
@@ -100,23 +100,23 @@ def apply(driver, student):
 
     print('Account Progress - 2/3', end='')
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.ID, 'inputEmail'))
     ).send_keys(student.email)
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.ID, 'inputEmailConfirm'))
     ).send_keys(student.email)
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.ID, 'inputSmsPhone'))
     ).send_keys(student.phone)
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.ID, 'inputStreetAddress1'))
     ).send_keys(student.streetAddress)
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.ID, 'inputCity'))
     ).send_keys(student.cityAddress)
 
@@ -124,11 +124,11 @@ def apply(driver, student):
         'inputState')) \
         .select_by_value(str(student.stateAddress))
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.ID, 'inputPostalCode'))
     ).send_keys(student.postalCode)
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.ID, 'accountFormSubmit'))
     ).click()
 
@@ -145,7 +145,7 @@ def apply(driver, student):
                 student.phone = random_phone_num_generator()
                 check_input_phone.send_keys(student.phone)
                 time.sleep(0.4)
-                WebDriverWait(driver, 60).until(
+                WebDriverWait(driver, 10).until(
                     EC.presence_of_element_located((By.ID, 'inputAlternatePhone_auth_txt'))
                 ).click()
 
@@ -178,7 +178,7 @@ def apply(driver, student):
 
         time.sleep(0.7)
 
-        WebDriverWait(driver, 60).until(
+        WebDriverWait(driver, 10).until(
             EC.element_to_be_clickable((By.ID, 'inputAddressValidationOverride'))
         ).click()
 
@@ -194,23 +194,23 @@ def apply(driver, student):
 
     print(' (Success)\nAccount Progress - 3/3')
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.ID, 'inputUserId'))
     ).send_keys(student.username)
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.ID, 'inputPasswd'))
     ).send_keys(student.password)
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.ID, 'inputPasswdConfirm'))
     ).send_keys(student.password)
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.ID, 'inputPin'))
     ).send_keys(student.pin)
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.ID, 'inputPinConfirm'))
     ).send_keys(student.pin)
 
@@ -222,7 +222,7 @@ def apply(driver, student):
         'inputSecurityQuestion1')) \
         .select_by_value('5')
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.ID, 'inputSecurityAnswer1'))
     ).send_keys("John")
 
@@ -234,7 +234,7 @@ def apply(driver, student):
         'inputSecurityQuestion2')) \
         .select_by_value('6')
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.ID, 'inputSecurityAnswer2'))
     ).send_keys(student.lastName)
 
@@ -246,7 +246,7 @@ def apply(driver, student):
         'inputSecurityQuestion3')) \
         .select_by_value('7')
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.ID, 'inputSecurityAnswer3'))
     ).send_keys("Doe")
 
@@ -274,13 +274,13 @@ def apply(driver, student):
     print('Waiting')
     input()
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.NAME, '_eventId_continue'))
     ).click()
 
     print('Details Progress - 1/8', end='')
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.element_located_to_be_selected((By.ID, 'inputTermId'))
     )
 
@@ -288,7 +288,7 @@ def apply(driver, student):
         'inputTermId')) \
         .select_by_index(2)
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.element_located_to_be_selected((By.ID, 'inputEduGoal'))
     )
 
@@ -296,7 +296,7 @@ def apply(driver, student):
         'inputEduGoal')) \
         .select_by_value('B')
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.element_located_to_be_selected((By.ID, 'inputMajorId'))
     )
 
@@ -304,25 +304,25 @@ def apply(driver, student):
         'inputMajorId')) \
         .select_by_index(random.randint(1, 7))
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.NAME, '_eventId_continue'))
     ).click()
 
     print(' (Success)')
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.ID, 'inputAddressSame'))
     ).click()
 
     time.sleep(0.7)
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.NAME, '_eventId_continue'))
     ).click()
 
     print('Details Progress - 2/8', end='')
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.element_located_to_be_selected((By.ID, 'inputEnrollmentStatus'))
     )
 
@@ -330,7 +330,7 @@ def apply(driver, student):
         'inputEnrollmentStatus')) \
         .select_by_index(1)
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.element_located_to_be_selected((By.ID, 'inputHsEduLevel'))
     )
 
@@ -338,7 +338,7 @@ def apply(driver, student):
         'inputHsEduLevel')) \
         .select_by_index(1)
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.element_located_to_be_selected((By.ID, 'inputHsCompMM'))
     )
 
@@ -350,23 +350,23 @@ def apply(driver, student):
         'inputHsCompDD')) \
         .select_by_value(str(student.eduDay))
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.ID, 'inputHsCompYYYY'))
     ).send_keys(student.eduYear)
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.ID, 'inputCaHsGradYes'))
     ).click()
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.ID, 'inputCaHs3yearYes'))
     ).click()
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.ID, 'inputHsAttendance1'))
     ).click()
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.element_located_to_be_selected((By.ID, 'hs-input-sf-state'))
     )
 
@@ -374,11 +374,11 @@ def apply(driver, student):
         'hs-input-sf-state')) \
         .select_by_value(student.stateAddress)
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.element_located_to_be_selected((By.ID, 'hs-school-name'))
     ).send_keys(random.choice(['north', 'east', 'south', 'west']))
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.ID, 'hs-suggestions'))
     )
     time.sleep(1)
@@ -389,7 +389,7 @@ def apply(driver, student):
     time.sleep(1)
     schools[random.randrange(2, 9)].click()
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.ID, 'inputGPA'))
     ).send_keys(Keys.BACKSPACE, '400')
 
@@ -397,7 +397,7 @@ def apply(driver, student):
         'inputHighestEnglishCourse')) \
         .select_by_index(random.randrange(1, 7))
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.element_located_to_be_selected((By.ID, 'inputHighestEnglishGrade'))
     )
 
@@ -409,7 +409,7 @@ def apply(driver, student):
         'inputHighestMathCourseTaken')) \
         .select_by_index(random.randrange(1, 13))
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.element_located_to_be_selected((By.ID, 'inputHighestMathTakenGrade'))
     )
 
@@ -417,7 +417,7 @@ def apply(driver, student):
         'inputHighestMathTakenGrade')) \
         .select_by_index(random.randrange(1, 8))
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.NAME, '_eventId_continue'))
     ).click()
 
@@ -427,7 +427,7 @@ def apply(driver, student):
 
     # Military
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.element_located_to_be_selected((By.ID, 'inputCitizenshipStatus'))
     )
 
@@ -439,7 +439,7 @@ def apply(driver, student):
         'inputMilitaryStatus')) \
         .select_by_index(1)
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.NAME, '_eventId_continue'))
     ).click()
 
@@ -449,19 +449,19 @@ def apply(driver, student):
 
     # Residency
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.ID, 'inputCaRes2YearsYes'))
     ).click()
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.ID, 'inputHomelessYouthNo'))
     ).click()
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.ID, 'inputIsEverInFosterCareNo'))
     ).click()
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.NAME, '_eventId_continue'))
     ).click()
 
@@ -471,23 +471,23 @@ def apply(driver, student):
 
     # Interests
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.ID, 'inputEnglishYes'))
     ).click()
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.ID, 'inputFinAidInfoNo'))
     ).click()
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.ID, 'inputAssistanceNo'))
     ).click()
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.ID, 'inputAthleticInterest3'))
     ).click()
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.NAME, '_eventId_continue'))
     ).click()
 
@@ -497,7 +497,7 @@ def apply(driver, student):
 
     # Demographic
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.element_located_to_be_selected((By.ID, 'inputGender'))
     )
 
@@ -521,19 +521,19 @@ def apply(driver, student):
         'inputParentGuardianEdu2')) \
         .select_by_index(random.randrange(1, 7))
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.ID, 'inputHispanicNo'))
     ).click()
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.ID, 'inputRaceEthnicity800'))
     ).click()
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.ID, 'inputRaceEthnicity' + str(random.randint(801, 809))))
     ).click()
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.NAME, '_eventId_continue'))
     ).click()
 
@@ -544,23 +544,23 @@ def apply(driver, student):
     # Supplemental
 
     if student.college == 'Mendocino College':
-        WebDriverWait(driver, 60).until(
+        WebDriverWait(driver, 10).until(
             EC.element_to_be_clickable((By.ID, 'YESNO_1_yes'))
         ).click()
 
-        WebDriverWait(driver, 60).until(
+        WebDriverWait(driver, 10).until(
             EC.element_to_be_clickable((By.ID, 'YESNO_2_no'))
         ).click()
 
-        WebDriverWait(driver, 60).until(
+        WebDriverWait(driver, 10).until(
             EC.element_to_be_clickable((By.ID, 'YESNO_3_no'))
         ).click()
 
-        WebDriverWait(driver, 60).until(
+        WebDriverWait(driver, 10).until(
             EC.element_to_be_clickable((By.ID, 'YESNO_4_no'))
         ).click()
 
-        WebDriverWait(driver, 60).until(
+        WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.ID, '_supp_TEXT_1'))
         ).send_keys("NONE")
 
@@ -568,7 +568,7 @@ def apply(driver, student):
 
     elif student.college == 'Antelope Valley':
 
-        WebDriverWait(driver, 60).until(
+        WebDriverWait(driver, 10).until(
             EC.element_located_to_be_selected(
                 (By.ID, '_supp_MENU_1'))
         )
@@ -579,7 +579,7 @@ def apply(driver, student):
 
     elif student.college == 'Southwestern College':
 
-        WebDriverWait(driver, 60).until(
+        WebDriverWait(driver, 10).until(
             EC.element_to_be_clickable(
                 (By.ID, 'YESNO_1_no'))
         ).click()
@@ -588,7 +588,7 @@ def apply(driver, student):
             '_supp_MENU_5')) \
             .select_by_index(1)
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.NAME, '_eventId_continue'))
     ).click()
 
@@ -598,21 +598,21 @@ def apply(driver, student):
 
     # Submission
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.ID, 'inputConsentYes'))
     ).click()
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.ID, 'inputESignature'))
     ).click()
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.ID, 'inputFinancialAidAck'))
     ).click()
 
     print(' (Success)')
 
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.ID, 'submit-application-button'))
     ).click()
 
