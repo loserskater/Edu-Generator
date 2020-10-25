@@ -10,7 +10,7 @@ def get_emails():
         accounts = f.readlines()
 
     for line in accounts:
-        emails.append(line.split('"email": "')[1].split('"')[0])
+        emails.append(line.split('"college": "')[1].split('"')[0] + ' - ' + line.split('"email": "')[1].split('"')[0])
 
 
 def main():
@@ -37,10 +37,10 @@ def main():
         webbrowser.open('https://generator.email/')
         sleep(10)
         for email in emails:
-            webbrowser.open('https://generator.email/'+email, new=2)
+            webbrowser.open('https://generator.email/'+email.split(' - ')[1], new=2)
             sleep(5)
     else:
-        webbrowser.open('https://generator.email/' + emails[data])
+        webbrowser.open('https://generator.email/' + emails[data].split(' - ')[1])
 
 
 if __name__ == '__main__':
