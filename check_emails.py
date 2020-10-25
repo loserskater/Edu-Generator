@@ -1,3 +1,4 @@
+import os
 import webbrowser
 from time import sleep
 
@@ -13,6 +14,10 @@ def get_emails():
 
 
 def main():
+    if os.stat('students.txt').st_size == 0:
+        print('No accounts created yet, run bot.py')
+        return
+
     get_emails()
 
     print("Select an email to check:")
