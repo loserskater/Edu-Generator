@@ -26,7 +26,9 @@ def apply(driver, student):
 
     driver.get(url)
 
-    driver.find_element_by_xpath('//*[@id="portletContent_u16l1n18"]/div/div[2]/div/a[2]').click()
+    WebDriverWait(driver, 60).until(
+        EC.presence_of_element_located((By.LINK_TEXT, "Create an Account"))
+    ).click()
 
     WebDriverWait(driver, 60).until(
         EC.presence_of_element_located((By.ID, "accountFormSubmit"))
@@ -46,33 +48,33 @@ def apply(driver, student):
         EC.presence_of_element_located((By.ID, "inputLastName"))
     ).send_keys(student.lastName)
 
-    driver.find_element_by_xpath('//*[@id="hasOtherNameNo"]').click()
-
-    driver.find_element_by_xpath('//*[@id="hasPreferredNameNo"]').click()
-
     WebDriverWait(driver, 60).until(
-        EC.element_to_be_clickable(
-            (By.CSS_SELECTOR, '#inputBirthDateMonth option[value="' + str(student.birthdayMonth) + '"]'))
+        EC.presence_of_element_located((By.ID, 'hasOtherNameNo'))
     ).click()
 
     WebDriverWait(driver, 60).until(
-        EC.element_to_be_clickable(
-            (By.CSS_SELECTOR, '#inputBirthDateDay option[value="' + str(student.birthdayDay) + '"]'))
+        EC.presence_of_element_located((By.ID, 'hasPreferredNameNo'))
     ).click()
+
+    Select(driver.find_element_by_id(
+        'inputBirthDateMonth')) \
+        .select_by_value(str(student.birthdayMonth))
+
+    Select(driver.find_element_by_id(
+        'inputBirthDateDay')) \
+        .select_by_value(str(student.birthdayDay))
 
     WebDriverWait(driver, 60).until(
         EC.presence_of_element_located((By.ID, 'inputBirthDateYear'))
     ).send_keys(student.birthdayYear)
 
-    WebDriverWait(driver, 60).until(
-        EC.element_to_be_clickable(
-            (By.CSS_SELECTOR, '#inputBirthDateMonthConfirm option[value="' + str(student.birthdayMonth) + '"]'))
-    ).click()
+    Select(driver.find_element_by_id(
+        'inputBirthDateMonthConfirm')) \
+        .select_by_value(str(student.birthdayMonth))
 
-    WebDriverWait(driver, 60).until(
-        EC.element_to_be_clickable(
-            (By.CSS_SELECTOR, '#inputBirthDateDayConfirm option[value="' + str(student.birthdayDay) + '"]'))
-    ).click()
+    Select(driver.find_element_by_id(
+        'inputBirthDateDayConfirm')) \
+        .select_by_value(str(student.birthdayDay))
 
     WebDriverWait(driver, 60).until(
         EC.presence_of_element_located((By.ID, 'inputBirthDateYearConfirm'))
@@ -90,16 +92,9 @@ def apply(driver, student):
         EC.element_to_be_clickable((By.NAME, 'ssnConfirm'))
     ).send_keys(student.ssn)
 
-    element = driver.find_element_by_id('accountFormSubmit')
-    desired_y = (element.size['height'] / 2) + element.location['y']
-    window_h = driver.execute_script('return window.innerHeight')
-    window_y = driver.execute_script('return window.pageYOffset')
-    current_y = (window_h / 2) + window_y
-    scroll_y_by = desired_y - current_y
-
-    driver.execute_script("window.scrollBy(0, arguments[0]);", scroll_y_by)
-
-    element.click()
+    WebDriverWait(driver, 60).until(
+        EC.element_to_be_clickable((By.ID, 'accountFormSubmit'))
+    ).click()
 
     print(' (Success)')
 
@@ -125,10 +120,9 @@ def apply(driver, student):
         EC.presence_of_element_located((By.ID, 'inputCity'))
     ).send_keys(student.cityAddress)
 
-    WebDriverWait(driver, 60).until(
-        EC.element_to_be_clickable(
-            (By.CSS_SELECTOR, '#inputState option[value="' + student.stateAddress + '"]'))
-    ).click()
+    Select(driver.find_element_by_id(
+        'inputState')) \
+        .select_by_value(str(student.stateAddress))
 
     WebDriverWait(driver, 60).until(
         EC.presence_of_element_located((By.ID, 'inputPostalCode'))
@@ -224,10 +218,9 @@ def apply(driver, student):
     # Question 1
     #
 
-    WebDriverWait(driver, 60).until(
-        EC.element_to_be_clickable(
-            (By.CSS_SELECTOR, '#inputSecurityQuestion1 option[value="5"]'))
-    ).click()
+    Select(driver.find_element_by_id(
+        'inputSecurityQuestion1')) \
+        .select_by_value('5')
 
     WebDriverWait(driver, 60).until(
         EC.presence_of_element_located((By.ID, 'inputSecurityAnswer1'))
@@ -237,10 +230,9 @@ def apply(driver, student):
     # Question 2
     #
 
-    WebDriverWait(driver, 60).until(
-        EC.element_to_be_clickable(
-            (By.CSS_SELECTOR, '#inputSecurityQuestion2 option[value="6"]'))
-    ).click()
+    Select(driver.find_element_by_id(
+        'inputSecurityQuestion2')) \
+        .select_by_value('6')
 
     WebDriverWait(driver, 60).until(
         EC.presence_of_element_located((By.ID, 'inputSecurityAnswer2'))
@@ -250,10 +242,9 @@ def apply(driver, student):
     # Question 3
     #
 
-    WebDriverWait(driver, 60).until(
-        EC.element_to_be_clickable(
-            (By.CSS_SELECTOR, '#inputSecurityQuestion3 option[value="7"]'))
-    ).click()
+    Select(driver.find_element_by_id(
+        'inputSecurityQuestion3')) \
+        .select_by_value('7')
 
     WebDriverWait(driver, 60).until(
         EC.presence_of_element_located((By.ID, 'inputSecurityAnswer3'))
@@ -280,26 +271,38 @@ def apply(driver, student):
             wait -= 1
             continue
 
+    print('Waiting')
+    input()
+
     WebDriverWait(driver, 60).until(
-        EC.element_to_be_clickable((By.XPATH, '//*[@id="registrationSuccess"]/main/div[2]/div/div/button'))
+        EC.element_to_be_clickable((By.NAME, '_eventId_continue'))
     ).click()
 
     print('Details Progress - 1/8', end='')
 
     WebDriverWait(driver, 60).until(
-        EC.presence_of_element_located((By.NAME, 'application.termId'))
+        EC.element_located_to_be_selected((By.ID, 'inputTermId'))
     )
 
-    dropdown_menu = Select(driver.find_element_by_name('application.termId'))
-    dropdown_menu.select_by_index(2)
+    Select(driver.find_element_by_id(
+        'inputTermId')) \
+        .select_by_index(2)
 
     WebDriverWait(driver, 60).until(
-        EC.element_to_be_clickable(
-            (By.CSS_SELECTOR, '#inputEduGoal option[value="B"]'))
-    ).click()
+        EC.element_located_to_be_selected((By.ID, 'inputEduGoal'))
+    )
 
-    dropdown_menu = Select(driver.find_element_by_id('inputMajorId'))
-    dropdown_menu.select_by_index(random.randint(1, 7))
+    Select(driver.find_element_by_id(
+        'inputEduGoal')) \
+        .select_by_value('B')
+
+    WebDriverWait(driver, 60).until(
+        EC.element_located_to_be_selected((By.ID, 'inputMajorId'))
+    )
+
+    Select(driver.find_element_by_id(
+        'inputMajorId')) \
+        .select_by_index(random.randint(1, 7))
 
     WebDriverWait(driver, 60).until(
         EC.element_to_be_clickable((By.NAME, '_eventId_continue'))
@@ -314,30 +317,38 @@ def apply(driver, student):
     time.sleep(0.7)
 
     WebDriverWait(driver, 60).until(
-        EC.element_to_be_clickable((By.XPATH, '//*[@id="column2"]/div[6]/ol/li[2]/button'))
+        EC.element_to_be_clickable((By.NAME, '_eventId_continue'))
     ).click()
 
-    # Page 2
-
-    dropdown_menu = Select(driver.find_element_by_name('appEducation.enrollmentStatus'))
-    dropdown_menu.select_by_index(1)
+    print('Details Progress - 2/8', end='')
 
     WebDriverWait(driver, 60).until(
-        EC.element_to_be_clickable(
-            (By.CSS_SELECTOR, '#inputHsEduLevel option[value="4"]'))
-    ).click()
+        EC.element_located_to_be_selected((By.ID, 'inputEnrollmentStatus'))
+    )
 
-    pass_year = [3, 4]
-
-    WebDriverWait(driver, 60).until(
-        EC.element_to_be_clickable(
-            (By.CSS_SELECTOR, '#inputHsCompMM option[value="' + str(random.choice(pass_year)) + '"]'))
-    ).click()
+    Select(driver.find_element_by_id(
+        'inputEnrollmentStatus')) \
+        .select_by_index(1)
 
     WebDriverWait(driver, 60).until(
-        EC.element_to_be_clickable(
-            (By.CSS_SELECTOR, '#inputHsCompDD option[value="' + str(student.eduDay) + '"]'))
-    ).click()
+        EC.element_located_to_be_selected((By.ID, 'inputHsEduLevel'))
+    )
+
+    Select(driver.find_element_by_id(
+        'inputHsEduLevel')) \
+        .select_by_index(1)
+
+    WebDriverWait(driver, 60).until(
+        EC.element_located_to_be_selected((By.ID, 'inputHsCompMM'))
+    )
+
+    Select(driver.find_element_by_id(
+        'inputHsCompMM')) \
+        .select_by_value('6')
+
+    Select(driver.find_element_by_id(
+        'inputHsCompDD')) \
+        .select_by_value(str(student.eduDay))
 
     WebDriverWait(driver, 60).until(
         EC.element_to_be_clickable((By.ID, 'inputHsCompYYYY'))
@@ -348,7 +359,7 @@ def apply(driver, student):
     ).click()
 
     WebDriverWait(driver, 60).until(
-        EC.element_to_be_clickable((By.ID, 'inputCaHs3yearNo'))
+        EC.element_to_be_clickable((By.ID, 'inputCaHs3yearYes'))
     ).click()
 
     WebDriverWait(driver, 60).until(
@@ -356,91 +367,80 @@ def apply(driver, student):
     ).click()
 
     WebDriverWait(driver, 60).until(
-        EC.element_to_be_clickable(
-            (By.CSS_SELECTOR, '#hs-input-sf-state option[value="' + student.stateAddress + '"]'))
-    ).click()
+        EC.element_located_to_be_selected((By.ID, 'hs-input-sf-state'))
+    )
 
-    search = driver.find_element_by_id('hs-school-name')
-    search.clear()
-    search.send_keys('high')
+    Select(driver.find_element_by_id(
+        'hs-input-sf-state')) \
+        .select_by_value(student.stateAddress)
+
+    WebDriverWait(driver, 60).until(
+        EC.element_located_to_be_selected((By.ID, 'hs-school-name'))
+    ).send_keys(random.choice(['north', 'east', 'south', 'west']))
+
     WebDriverWait(driver, 60).until(
         EC.element_to_be_clickable((By.ID, 'hs-suggestions'))
     )
     time.sleep(1)
 
     parent = driver.find_element_by_class_name('autocomplete-menu')
-    it = parent.find_elements_by_tag_name("li")
+    schools = parent.find_elements_by_tag_name("li")
 
-    if len(it) < 5:
-        print('Changing State....')
-        Select(driver.find_element_by_id('hs-input-sf-state')).select_by_value('CA')
-
-        search.clear()
-        search.send_keys('high', Keys.ENTER)
-        WebDriverWait(driver, 60).until(
-            EC.element_to_be_clickable((By.ID, 'hs-suggestions'))
-        )
-        time.sleep(1)
-
-        parent = driver.find_element_by_class_name('autocomplete-menu')
-        it = parent.find_elements_by_tag_name("li")
-        if len(it) > 5:
-            print('State Changed, Resuming')
-
-    try:
-        time.sleep(1)
-        it[random.randint(4, 8)].click()
-    except Exception as e:
-        print(str(e), 'can\'t click')
+    time.sleep(1)
+    schools[random.randrange(2, 9)].click()
 
     WebDriverWait(driver, 60).until(
         EC.element_to_be_clickable((By.ID, 'inputGPA'))
     ).send_keys(Keys.BACKSPACE, '400')
 
-    WebDriverWait(driver, 60).until(
-        EC.element_to_be_clickable(
-            (By.CSS_SELECTOR, '#inputHighestEnglishCourse option[value="4"]'))
-    ).click()
+    Select(driver.find_element_by_id(
+        'inputHighestEnglishCourse')) \
+        .select_by_index(random.randrange(1, 7))
 
     WebDriverWait(driver, 60).until(
-        EC.element_to_be_clickable(
-            (By.CSS_SELECTOR, '#inputHighestEnglishGrade option[value="A"]'))
-    ).click()
+        EC.element_located_to_be_selected((By.ID, 'inputHighestEnglishGrade'))
+    )
+
+    Select(driver.find_element_by_id(
+        'inputHighestEnglishGrade')) \
+        .select_by_index(random.randrange(1, 8))
+
+    Select(driver.find_element_by_id(
+        'inputHighestMathCourseTaken')) \
+        .select_by_index(random.randrange(1, 13))
 
     WebDriverWait(driver, 60).until(
-        EC.element_to_be_clickable(
-            (By.CSS_SELECTOR, '#inputHighestMathCourseTaken option[value="7"]'))
-    ).click()
+        EC.element_located_to_be_selected((By.ID, 'inputHighestMathTakenGrade'))
+    )
+
+    Select(driver.find_element_by_id(
+        'inputHighestMathTakenGrade')) \
+        .select_by_index(random.randrange(1, 8))
 
     WebDriverWait(driver, 60).until(
-        EC.element_to_be_clickable(
-            (By.CSS_SELECTOR, '#inputHighestMathTakenGrade option[value="A"]'))
+        EC.element_to_be_clickable((By.NAME, '_eventId_continue'))
     ).click()
 
-    time.sleep(0.7)
-
-    WebDriverWait(driver, 60).until(
-        EC.presence_of_element_located((By.XPATH, '//*[@id="column2"]/div[14]/ol/li[2]/button'))
-    ).click()
-
-    print('Details Progress - 2/8 (Success)')
+    print(' (Success)')
 
     print('Details Progress - 3/8', end='')
 
     # Military
 
     WebDriverWait(driver, 60).until(
-        EC.element_to_be_clickable(
-            (By.CSS_SELECTOR, '#inputCitizenshipStatus option[value="1"]'))
-    ).click()
+        EC.element_located_to_be_selected((By.ID, 'inputCitizenshipStatus'))
+    )
+
+    Select(driver.find_element_by_id(
+        'inputCitizenshipStatus')) \
+        .select_by_index(1)
+
+    Select(driver.find_element_by_id(
+        'inputMilitaryStatus')) \
+        .select_by_index(1)
 
     WebDriverWait(driver, 60).until(
-        EC.element_to_be_clickable(
-            (By.CSS_SELECTOR, '#inputMilitaryStatus option[value="1"]'))
-    ).click()
-
-    WebDriverWait(driver, 60).until(
-        EC.presence_of_element_located((By.XPATH, '//*[@id="column2"]/div[6]/ol/li[2]/button'))
+        EC.element_to_be_clickable((By.NAME, '_eventId_continue'))
     ).click()
 
     print(' (Success)')
@@ -462,16 +462,14 @@ def apply(driver, student):
     ).click()
 
     WebDriverWait(driver, 60).until(
-        EC.presence_of_element_located((By.XPATH, '//*[@id="column2"]/div[7]/ol/li[2]/button'))
+        EC.element_to_be_clickable((By.NAME, '_eventId_continue'))
     ).click()
-
-    # driver.find_element_by_xpath('//*[@id="column2"]/div[7]/ol/li[2]/button').click()
 
     print(' (Success)')
 
     print('Details Progress - 5/8', end='')
 
-    # Intersts
+    # Interests
 
     WebDriverWait(driver, 60).until(
         EC.element_to_be_clickable((By.ID, 'inputEnglishYes'))
@@ -486,49 +484,12 @@ def apply(driver, student):
     ).click()
 
     WebDriverWait(driver, 60).until(
-        EC.element_to_be_clickable((By.ID, 'inputAthleticInterest1'))
+        EC.element_to_be_clickable((By.ID, 'inputAthleticInterest3'))
     ).click()
-
-    element = driver.find_elements_by_class_name('ccc-form-layout')[5]
-    desired_y = (element.size['height'] / 2) + element.location['y']
-    window_h = driver.execute_script('return window.innerHeight')
-    window_y = driver.execute_script('return window.pageYOffset')
-    current_y = (window_h / 2) + window_y
-    scroll_y_by = desired_y - current_y
-
-    driver.execute_script("window.scrollBy(0, arguments[0]);", scroll_y_by)
-
-    allElements = element.find_elements_by_tag_name('li')
-
-    rndList = [2, 1, 2, 2]
-
-    occurance = 0
-    inputChecked = False
-
-    while occurance < 2:
-        for elementxx in allElements:
-            myRandom = random.choice(rndList)
-            xx = elementxx.find_element_by_class_name('portlet-form-input-checkbox')
-            if xx.get_attribute('id') == 'inputOnlineClasses' and inputChecked == False:
-                myRandom = 1
-                inputChecked = True
-            if myRandom == 1:
-                occurance += 1
-                element = xx
-                desired_y = (element.size['height'] / 2) + element.location['y']
-                window_h = driver.execute_script('return window.innerHeight')
-                window_y = driver.execute_script('return window.pageYOffset')
-                current_y = (window_h / 2) + window_y
-                scroll_y_by = desired_y - current_y
-
-                driver.execute_script("window.scrollBy(0, arguments[0]);", scroll_y_by)
-                xx.click()
 
     WebDriverWait(driver, 60).until(
-        EC.presence_of_element_located((By.XPATH, '//*[@id="column2"]/div[9]/ol/li[2]/button'))
+        EC.element_to_be_clickable((By.NAME, '_eventId_continue'))
     ).click()
-
-    # driver.find_element_by_xpath('//*[@id="column2"]/div[9]/ol/li[2]/button').click()
 
     print(' (Success)')
 
@@ -537,29 +498,28 @@ def apply(driver, student):
     # Demographic
 
     WebDriverWait(driver, 60).until(
-        EC.element_to_be_clickable(
-            (By.CSS_SELECTOR, '#inputGender option[value="Male"]'))
-    ).click()
+        EC.element_located_to_be_selected((By.ID, 'inputGender'))
+    )
 
-    WebDriverWait(driver, 60).until(
-        EC.element_to_be_clickable(
-            (By.CSS_SELECTOR, '#inputTransgender option[value="No"]'))
-    ).click()
+    Select(driver.find_element_by_id(
+        'inputGender')) \
+        .select_by_value('Male')
 
-    WebDriverWait(driver, 60).until(
-        EC.element_to_be_clickable(
-            (By.CSS_SELECTOR, '#inputOrientation option[value="StraightHetrosexual"]'))
-    ).click()
+    Select(driver.find_element_by_id(
+        'inputTransgender')) \
+        .select_by_value('No')
 
-    WebDriverWait(driver, 60).until(
-        EC.element_to_be_clickable(
-            (By.CSS_SELECTOR, '#inputParentGuardianEdu1 option[value="6"]'))
-    ).click()
+    Select(driver.find_element_by_id(
+        'inputOrientation')) \
+        .select_by_value('StraightHetrosexual')
 
-    WebDriverWait(driver, 60).until(
-        EC.element_to_be_clickable(
-            (By.CSS_SELECTOR, '#inputParentGuardianEdu2 option[value="2"]'))
-    ).click()
+    Select(driver.find_element_by_id(
+        'inputParentGuardianEdu1')) \
+        .select_by_index(random.randrange(1, 7))
+
+    Select(driver.find_element_by_id(
+        'inputParentGuardianEdu2')) \
+        .select_by_index(random.randrange(1, 7))
 
     WebDriverWait(driver, 60).until(
         EC.element_to_be_clickable((By.ID, 'inputHispanicNo'))
@@ -574,10 +534,8 @@ def apply(driver, student):
     ).click()
 
     WebDriverWait(driver, 60).until(
-        EC.presence_of_element_located((By.XPATH, '//*[@id="column2"]/div[7]/ol/li[2]/button'))
+        EC.element_to_be_clickable((By.NAME, '_eventId_continue'))
     ).click()
-
-    # driver.find_element_by_xpath('//*[@id="column2"]/div[7]/ol/li[2]/button').click()
 
     print(' (Success)')
 
@@ -611,11 +569,28 @@ def apply(driver, student):
     elif student.college == 'Antelope Valley':
 
         WebDriverWait(driver, 60).until(
+            EC.element_located_to_be_selected(
+                (By.ID, '_supp_MENU_1'))
+        )
+
+        Select(driver.find_element_by_id(
+            '_supp_MENU_1')) \
+            .select_by_value('B')
+
+    elif student.college == 'Southwestern College':
+
+        WebDriverWait(driver, 60).until(
             EC.element_to_be_clickable(
-                (By.CSS_SELECTOR, '#_supp_MENU_1 option[value="B"]'))
+                (By.ID, 'YESNO_1_no'))
         ).click()
 
-        driver.find_element_by_name("_eventId_continue").click()
+        Select(driver.find_element_by_id(
+            '_supp_MENU_5')) \
+            .select_by_index(1)
+
+    WebDriverWait(driver, 60).until(
+        EC.element_to_be_clickable((By.NAME, '_eventId_continue'))
+    ).click()
 
     print(' (Success)')
 
@@ -637,16 +612,8 @@ def apply(driver, student):
 
     print(' (Success)')
 
-    element = driver.find_element_by_xpath('//*[@id="submit-application-button"]')
-    desired_y = (element.size['height'] / 2) + element.location['y']
-    window_h = driver.execute_script('return window.innerHeight')
-    window_y = driver.execute_script('return window.pageYOffset')
-    current_y = (window_h / 2) + window_y
-    scroll_y_by = desired_y - current_y
-
-    driver.execute_script("window.scrollBy(0, arguments[0]);", scroll_y_by)
-
-    # driver.find_element_by_xpath('//*[@id="submit-application-button"]').click()
-    element.click()
+    WebDriverWait(driver, 60).until(
+        EC.element_to_be_clickable((By.ID, 'submit-application-button'))
+    ).click()
 
     print('Complete!\nRun check_email.py in a day or two')
