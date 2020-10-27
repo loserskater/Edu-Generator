@@ -32,6 +32,10 @@ allColleges = {
     'Westmoreland College': {
         'url': 'https://apply.westmoreland.edu/Datatel.ERecruiting.Web.External/Pages/createaccount.aspx',
         'state': 'PA'
+    },
+    'Lansing College': {
+        'url': 'https://starnetb.lcc.edu/LCCB/bwskalog.p_disploginnew?in_id=&cpbl=&newid=',
+        'state': 'MI'
     }
 }
 
@@ -129,7 +133,10 @@ def build_student(driver, college):
 
     student.username = student.firstName + str(suffix(7))
     student.password = student.lastName + str(suffix(5))
-    student.pin = str(suffix(4))
+    if college == 'Lansing College':
+        student.pin = str(suffix(8))
+    else:
+        student.pin = str(suffix(4))
 
     student.birthdayMonth = str(random.randint(1, 12))
     student.birthdayDay = str(random.randint(1, 27))
