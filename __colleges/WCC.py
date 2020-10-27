@@ -9,12 +9,6 @@ import Student
 
 
 def apply(driver, student):
-    url = Student.allColleges.get(student.college).get('url')
-
-    driver.get(url)
-
-    print('Applying to ' + student.college, end='')
-
     WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.ID, "ctl00_mainContent_LoggedInFromPublicComputer"))
     ).click()
@@ -62,11 +56,9 @@ def apply(driver, student):
                                     "ctl00_mainContent_CreateUserControl_ProspectForm_address1_postalcode_address1_postalcode"))
     ).send_keys(student.postalCode)
 
-    select = Select(driver.find_element_by_id('ctl00_mainContent_CreateUserControl_ProspectForm_datatel_stateprovinceid_datatel_stateprovinceid'))
-    select.select_by_visible_text('Pennsylvania')
+    Select(driver.find_element_by_id('ctl00_mainContent_CreateUserControl_ProspectForm_datatel_stateprovinceid_datatel_stateprovinceid')).select_by_visible_text('Pennsylvania')
 
-    select = Select(driver.find_element_by_id('ctl00_mainContent_CreateUserControl_ProspectForm_datatel_anticipatedentrytermid_datatel_anticipatedentrytermid'))
-    select.select_by_visible_text('Spring 2021 Credit')
+    Select(driver.find_element_by_id('ctl00_mainContent_CreateUserControl_ProspectForm_datatel_anticipatedentrytermid_datatel_anticipatedentrytermid')).select_by_visible_text('Spring 2021 Credit')
 
     WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.ID, 'ctl00_mainContent_CreateUserControl_ProspectForm_membership_password_membership_password'))

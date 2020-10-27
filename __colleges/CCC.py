@@ -22,10 +22,6 @@ def random_phone_num_generator():
 
 
 def apply(driver, student):
-    url = Student.allColleges.get(student.college).get('url')
-
-    driver.get(url)
-
     WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.LINK_TEXT, "Create an Account"))
     ).click()

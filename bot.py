@@ -1,7 +1,7 @@
 import time
 from selenium import webdriver
 import Student
-from __colleges import CCC, WCC
+from __colleges import CCC, WCC, LCC
 
 
 def start_bot():
@@ -35,10 +35,16 @@ def new_application(college):
 
     url = Student.allColleges.get(student.college).get('url')
 
+    driver.get(url)
+
+    print('Applying to ' + student.college)
+
     if 'opencccapply' in url:
         CCC.apply(driver, student)
     elif 'westmoreland' in url:
         WCC.apply(driver, student)
+    elif 'lcc' in url:
+        LCC.apply(driver, student)
 
 
 def continue_application(college):
