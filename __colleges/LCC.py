@@ -58,31 +58,31 @@ def apply(driver, student):
     ).click()
 
     WebDriverWait(driver, 10).until(
-        EC.element_to_be_clickable((By.LINK_TEXT, "addr1_id"))
+        EC.element_to_be_clickable((By.ID, "addr1_id"))
     ).send_keys(student.streetAddress)
 
     WebDriverWait(driver, 10).until(
-        EC.element_to_be_clickable((By.LINK_TEXT, "city_id"))
+        EC.element_to_be_clickable((By.ID, "city_id"))
     ).send_keys(student.cityAddress)
 
     Select(driver.find_element_by_id('stat_id')).select_by_value(student.stateAddress)
 
     WebDriverWait(driver, 10).until(
-        EC.element_to_be_clickable((By.LINK_TEXT, "area_id"))
-    ).send_keys(student.phone.split()[0])
+        EC.element_to_be_clickable((By.ID, "area_id"))
+    ).send_keys(student.phone.split('-')[0])
 
     WebDriverWait(driver, 10).until(
-        EC.element_to_be_clickable((By.LINK_TEXT, "phone_id"))
-    ).send_keys(student.phone.split()[1])
+        EC.element_to_be_clickable((By.ID, "phone_id"))
+    ).send_keys(student.phone.split('-')[1:])
 
     WebDriverWait(driver, 10).until(
-        EC.element_to_be_clickable((By.LINK_TEXT, "ud1_yes_id"))
+        EC.element_to_be_clickable((By.ID, "ud1_yes_id"))
     ).click()
 
     WebDriverWait(driver, 10).until(
-        EC.element_to_be_clickable((By.LINK_TEXT, "ud2_no_id"))
+        EC.element_to_be_clickable((By.ID, "ud2_no_id"))
     ).click()
 
     WebDriverWait(driver, 10).until(
-        EC.element_to_be_clickable((By.LINK_TEXT, "id____UID0"))
+        EC.element_to_be_clickable((By.ID, "id____UID0"))
     ).click()
