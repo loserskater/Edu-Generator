@@ -151,7 +151,6 @@ def apply(driver, student):
                         EC.presence_of_element_located((By.XPATH, '//*[@id="messageFooterLabel"]'))
                     ).click()
                 except Exception as e:
-                    print(e)
                     break
                 continue
             else:
