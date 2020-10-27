@@ -6,36 +6,30 @@ import random
 import string
 import time
 import json
+from faker import Faker
 
 
 allColleges = {
     'Mendocino College': {
-        'url': 'https://www.opencccapply.net/gateway/apply?cccMisCode=141',
-        'state': 'CA'
+        'url': 'https://www.opencccapply.net/gateway/apply?cccMisCode=141'
     },
     'Contra Costa College': {
-        'url': 'https://www.opencccapply.net/gateway/apply?cccMisCode=311',
-        'state': 'CA'
+        'url': 'https://www.opencccapply.net/gateway/apply?cccMisCode=311'
     },
     'Grossmont College': {
-        'url': 'https://www.opencccapply.net/gateway/apply?cccMisCode=022',
-        'state': 'CA'
+        'url': 'https://www.opencccapply.net/gateway/apply?cccMisCode=022'
     },
     'Antelope Valley College': {
-        'url': 'https://www.opencccapply.net/gateway/apply?cccMisCode=621',
-        'state': 'CA'
+        'url': 'https://www.opencccapply.net/gateway/apply?cccMisCode=621'
     },
     'Southwestern College': {
-        'url': 'https://www.opencccapply.net/gateway/apply?cccMisCode=091',
-        'state': 'CA'
+        'url': 'https://www.opencccapply.net/gateway/apply?cccMisCode=091'
     },
     'Westmoreland College': {
-        'url': 'https://apply.westmoreland.edu/Datatel.ERecruiting.Web.External/Pages/createaccount.aspx',
-        'state': 'PA'
+        'url': 'https://apply.westmoreland.edu/Datatel.ERecruiting.Web.External/Pages/createaccount.aspx'
     },
     'Lansing College': {
-        'url': 'https://starnetb.lcc.edu/LCCB/bwskalog.p_disploginnew?in_id=&cpbl=&newid=',
-        'state': 'MI'
+        'url': 'https://starnetb.lcc.edu/LCCB/bwskalog.p_disploginnew?in_id=&cpbl=&newid='
     }
 }
 
@@ -72,64 +66,40 @@ def suffix(n):
 
 def build_student(driver, college):
     student = Student()
+    fake = Faker()
+
     student.college = college
-    student.stateAddress = allColleges.get(college).get('state')
-    random.seed()
-    letters = string.ascii_uppercase
-    student.middleName = random.choice(letters)
+    first_name = fake.first_name_male()
+    last_name = fake.last_name()
 
-    driver.get('https://names.igopaygo.com/people/fake-person')
+    print('Getting email', end='')
 
-    print('Getting random student info', end='')
+    driver.get('https://generator.email/email-generator')
 
-    WebDriverWait(driver, 5).until(
-        EC.presence_of_element_located(
-            (By.XPATH, "//select[@name='gender']/option[@value='M']"))
-    ).click()
+    domain = WebDriverWait(driver, 60).until(
+        EC.presence_of_element_located((By.ID, "email_ch_text"))
+    ).text.split('@')[1]
 
-    WebDriverWait(driver, 5).until(
-        EC.element_to_be_clickable(
-            (By.XPATH, "//select[@name='country']/option[@value='" + student.stateAddress + "']"))
-    ).click()
+    student.email = str.lower(student.firstName + student.lastName) + '@' + domain
 
-    WebDriverWait(driver, 5).until(
-        EC.element_to_be_clickable(
-            (By.XPATH, "//select[@name='real_cities']/option[@value='1']"))
-    ).click()
+    print(' (Complete)')
 
-    WebDriverWait(driver, 5).until(
-        EC.element_to_be_clickable(
-            (By.ID, 'create'))
-    ).click()
+    with open('addresses.json', 'r') as f:
+        addresses = json.load(f, object_hook=lambda d: SimpleNamespace(**d))
 
-    time.sleep(1)
+    address = random.choice(addresses.addresses)
+    student.streetAddress = address.address1
+    student.cityAddress = address.city
+    student.stateAddress = address.state
+    student.postalCode = address.postalCode
 
-    name = WebDriverWait(driver, 5).until(
-        EC.presence_of_element_located((By.XPATH, "//span[@class='given-name']"))
-    ).text
+    student.firstName = first_name
+    student.middleName = random.choice(string.ascii_uppercase)
+    student.lastName = last_name
 
-    student.firstName = name.split()[1]
-    student.lastName = name.split()[2]
+    student.phone = '202-555-' + str(suffix(4))
 
-    student.streetAddress = WebDriverWait(driver, 5).until(
-        EC.presence_of_element_located((By.XPATH, "//span[@class='street-address']"))
-    ).text
-
-    student.cityAddress = WebDriverWait(driver, 5).until(
-        EC.presence_of_element_located((By.XPATH, "//span[@class='locality']"))
-    ).text
-
-    student.postalCode = WebDriverWait(driver, 5).until(
-        EC.presence_of_element_located((By.XPATH, "//span[@class='postal-code']"))
-    ).text.split()[0]
-
-    student.phone = WebDriverWait(driver, 5).until(
-        EC.presence_of_element_located((By.XPATH, "//div[text()='Phone:']/following-sibling::div/span/a"))
-    ).text
-
-    student.ssn = WebDriverWait(driver, 5).until(
-        EC.presence_of_element_located((By.XPATH, "//div[text()='SSN:']/following-sibling::div/a"))
-    ).text
+    student.ssn = fake.ssn()
 
     student.username = student.firstName + str(suffix(7))
     student.password = student.lastName + str(suffix(5))
@@ -144,18 +114,6 @@ def build_student(driver, college):
     student.eduMonth = str(random.randint(1, 12))
     student.eduDay = str(random.randint(1, 27))
     student.eduYear = str(random.randint(2019, 2020))
-
-    print(' (Complete)\nGetting email', end='')
-
-    driver.get('https://generator.email/email-generator')
-
-    domain = WebDriverWait(driver, 60).until(
-        EC.presence_of_element_located((By.ID, "email_ch_text"))
-    ).text.split('@')[1]
-
-    student.email = str.lower(student.firstName + student.lastName) + '@' + domain
-
-    print(' (Complete)')
 
     return student
 
