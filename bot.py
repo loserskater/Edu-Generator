@@ -47,7 +47,7 @@ def new_application(college):
         LCC.apply(driver, student)
 
 
-def continue_application(college):
+def continue_application():
     student: Student.Student
 
     student = Student.get_student_from_file()
@@ -80,14 +80,16 @@ def main():
         print(str(index + 1) + ' - ' + college)
 
     while True:
-        data = int(input())
-        if data > len(Student.allColleges) or data < 1:
+        data = input()
+        if data == '':
+            continue
+        if int(data) > len(Student.allColleges) or int(data) < 1:
             print("Invalid response, try again.")
             continue
         else:
             break
 
-    college = colleges[data - 1]
+    college = colleges[int(data) - 1]
 
     print('\nSelected College: ' + college)
 
@@ -95,15 +97,17 @@ def main():
         print('1 - New Application\n2 - Check email and continue application')
 
         while True:
-            data = int(input())
-            if data not in (1, 2):
+            data = input()
+            if data == '':
+                continue
+            if int(data) not in (1, 2):
                 print("Invalid response, try again.")
                 continue
             else:
                 break
 
-        if data == 2:
-            continue_application(college)
+        if int(data) == 2:
+            continue_application()
             return
 
     new_application(college)

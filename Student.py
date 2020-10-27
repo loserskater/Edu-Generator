@@ -80,28 +80,21 @@ def build_student(driver, college):
         EC.presence_of_element_located((By.ID, "email_ch_text"))
     ).text.split('@')[1]
 
-    student.email = str.lower(student.firstName + student.lastName) + '@' + domain
+    student.email = str.lower(first_name + last_name) + '@' + domain
 
     print(' (Complete)')
-
-    with open('addresses.json', 'r') as f:
-        addresses = json.load(f, object_hook=lambda d: SimpleNamespace(**d))
-
-    address = random.choice(addresses.addresses)
-    student.streetAddress = address.address1
-    student.cityAddress = address.city
-    student.stateAddress = address.state
-    student.postalCode = address.postalCode
 
     student.firstName = first_name
     student.middleName = random.choice(string.ascii_uppercase)
     student.lastName = last_name
 
+    get_new_address(student)
+
     student.phone = '202-555-' + str(suffix(4))
 
-    student.ssn = fake.ssn()
+    student.ssn = fake.ssn().replace('-', '')
 
-    student.username = student.firstName + str(suffix(7))
+    student.username = student.firstName[:3] + str(suffix(5))
     student.password = student.lastName + str(suffix(5))
     if college == 'Lansing College':
         student.pin = str(suffix(8))
@@ -116,6 +109,22 @@ def build_student(driver, college):
     student.eduYear = str(random.randint(2019, 2020))
 
     return student
+
+
+def get_new_address(student):
+    with open('addresses.json', 'r') as f:
+        addresses = json.load(f, object_hook=lambda d: SimpleNamespace(**d))
+
+    while True:
+        address = random.choice(addresses.addresses)
+        if address.address2 == '':
+            student.streetAddress = address.address1
+            student.cityAddress = address.city
+            student.stateAddress = address.state
+            student.postalCode = address.postalCode
+            break
+        else:
+            continue
 
 
 def save_student(student):
