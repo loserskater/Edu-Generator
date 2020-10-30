@@ -128,65 +128,6 @@ def apply(driver, student):
         EC.presence_of_element_located((By.ID, 'accountFormSubmit'))
     ).click()
 
-    try:
-        time.sleep(1)
-        driver.find_element_by_xpath('//*[@id="messageFooterLabel"]').click()
-
-        while True:
-            check_input_phone = driver.find_element_by_id('inputSmsPhone')
-            check_error = check_input_phone.get_attribute('class')
-            if check_error == 'portlet-form-input-field error':
-                print('Invalid Number, Retrying....')
-                check_input_phone.clear()
-                student.phone = random_phone_num_generator()
-                check_input_phone.send_keys(student.phone)
-                time.sleep(0.4)
-                WebDriverWait(driver, 10).until(
-                    EC.presence_of_element_located((By.ID, 'inputAlternatePhone_auth_txt'))
-                ).click()
-
-                try:
-                    time.sleep(1)
-                    WebDriverWait(driver, 10).until(
-                        EC.presence_of_element_located((By.XPATH, '//*[@id="messageFooterLabel"]'))
-                    ).click()
-                except Exception as e:
-                    break
-                continue
-            else:
-                break
-
-    except Exception as e:
-        print(e)
-
-    time.sleep(1)
-
-    WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.ID, 'accountFormSubmit'))
-    ).click()
-
-    try:
-        time.sleep(1)
-        WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.ID, 'messageFooterLabel'))
-        ).click()
-
-        time.sleep(0.7)
-
-        WebDriverWait(driver, 10).until(
-            EC.element_to_be_clickable((By.ID, 'inputAddressValidationOverride'))
-        ).click()
-
-        time.sleep(1)
-
-        WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.ID, 'accountFormSubmit'))
-        ).click()
-
-    except Exception as e:
-        print(e)
-        pass
-
     print(' (Success)\nAccount Progress - 3/3')
 
     WebDriverWait(driver, 10).until(
@@ -383,7 +324,7 @@ def apply(driver, student):
     parent = driver.find_element_by_class_name('autocomplete-menu')
     schools = parent.find_elements_by_tag_name("li")
 
-    schools[random.randint(2, 9)].click()
+    schools[random.randint(2, len(schools))].click()
 
     WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.ID, 'inputGPA'))
@@ -560,7 +501,9 @@ def apply(driver, student):
             EC.presence_of_element_located((By.ID, '_supp_TEXT_1'))
         ).send_keys("NONE")
 
-        driver.find_element_by_name("_eventId_continue").click()
+        WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.XPATH, "//button[normalize-space()='Continue']"))
+        ).click()
 
     elif student.college == 'Antelope Valley College':
 
@@ -573,6 +516,10 @@ def apply(driver, student):
             '_supp_MENU_1')) \
             .select_by_value('B')
 
+        WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.XPATH, "//button[normalize-space()='Continue']"))
+        ).click()
+
     elif student.college == 'Southwestern College':
 
         WebDriverWait(driver, 10).until(
@@ -584,9 +531,9 @@ def apply(driver, student):
             '_supp_MENU_5')) \
             .select_by_index(1)
 
-    WebDriverWait(driver, 10).until(
-        EC.element_to_be_clickable((By.XPATH, "//button[normalize-space()='Continue']"))
-    ).click()
+        WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.XPATH, "//button[normalize-space()='Continue']"))
+        ).click()
 
     print(' (Success)')
 
