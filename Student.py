@@ -16,9 +16,6 @@ allColleges = {
     'Contra Costa College': {
         'url': 'https://www.opencccapply.net/gateway/apply?cccMisCode=311'
     },
-    'Grossmont College': {
-        'url': 'https://www.opencccapply.net/gateway/apply?cccMisCode=022'
-    },
     'Antelope Valley College': {
         'url': 'https://www.opencccapply.net/gateway/apply?cccMisCode=621'
     },
