@@ -300,9 +300,9 @@ def apply(driver, student):
         EC.element_to_be_clickable((By.ID, 'inputCaHs3yearYes'))
     ).click()
 
-    WebDriverWait(driver, 10).until(
-        EC.element_to_be_clickable((By.ID, 'inputHsAttendance1'))
-    ).click()
+    Select(driver.find_element_by_id(
+        'inputHsAttendance')) \
+        .select_by_value('1')
 
     WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.ID, 'hs-input-sf-state'))
