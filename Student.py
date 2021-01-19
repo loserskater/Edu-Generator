@@ -27,6 +27,9 @@ allColleges = {
     },
     'Lansing College': {
         'url': 'https://starnetb.lcc.edu/LCCB/bwskalog.p_disploginnew?in_id=&cpbl=&newid='
+    },
+    'Durham Tech': {
+        'url': 'https://auth.cfnc.org/Identity/Account/Register'
     }
 }
 
@@ -95,6 +98,8 @@ def build_student(driver, college):
     student.password = student.lastName + str(suffix(5))
     if college == 'Lansing College':
         student.pin = str(suffix(8))
+    elif college == 'Stockton University':
+        student.pin = first_name[0] + str(suffix(7))
     else:
         student.pin = str(suffix(4))
 
